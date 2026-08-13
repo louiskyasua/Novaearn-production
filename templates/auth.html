@@ -1,1 +1,24 @@
-{% extends "base.html" %}{% block content %}<div class="card"><h1>{{ 'Create account' if mode == 'register' else 'Login' }}</h1><form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">{% if mode == 'register' %}<label>Name</label><input name="name" required maxlength="100">{% endif %}<label>Email</label><input type="email" name="email" required maxlength="254"><label>Password</label><input type="password" name="password" required minlength="8" maxlength="128">{% if mode == 'register' %}<label>Referral code (optional)</label><input name="ref" maxlength="50">{% endif %}<button type="submit">{{ 'Register' if mode == 'register' else 'Login' }}</button></form></div>{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:620px;margin:40px auto">
+  <p class="eyebrow">NOVA EARN</p>
+  <h1>{{ 'Create account' if mode == 'register' else 'Welcome back' }}</h1>
+  <p class="muted">{{ 'Create your Nova Earn account to get started.' if mode == 'register' else 'Sign in to continue to your account.' }}</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    {% if mode == 'register' %}
+      <label for="name">Name</label>
+      <input id="name" name="name" required maxlength="100" autocomplete="name">
+    {% endif %}
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email" required maxlength="254" autocomplete="email">
+    <label for="password">Password</label>
+    <input id="password" type="password" name="password" required minlength="8" maxlength="128" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}">
+    {% if mode == 'register' %}
+      <label for="ref">Referral code <span class="muted">(optional)</span></label>
+      <input id="ref" name="ref" maxlength="50" autocomplete="off">
+    {% endif %}
+    <button type="submit">{{ 'Create account' if mode == 'register' else 'Sign in' }}</button>
+  </form>
+</div>
+{% endblock %}
