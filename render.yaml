@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: novaearn
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /healthz
+    disk:
+      name: novaearn-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: NOVA_COOKIE_SECURE
+        value: "1"
+      - key: NOVA_DATA_DIR
+        value: /var/data
+      - key: NOVA_EARN_SECRET
+        generateValue: true
+      - key: NOVA_ADMIN_EMAIL
+        sync: false
+      - key: NOVA_ADMIN_PASSWORD
+        sync: false
+      - key: NOVA_PAYMENT_ACCOUNTS_JSON
+        sync: false
