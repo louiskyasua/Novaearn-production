@@ -1,4 +1,29 @@
-{% extends "base.html" %}{% block content %}
-<div class="card"><h1>NovaEarn</h1><p class="muted">Investment and wallet platform.</p>{% if logged %}<a class="btn" href="{{ url_for('dashboard') }}">Open dashboard</a>{% else %}<a class="btn" href="{{ url_for('register') }}">Create account</a>{% endif %}</div>
-<h2>Investment plans</h2><div class="grid">{% for p in plans %}<div class="card"><h3>{{ p[1] }}</h3><p>₦{{ '{:,}'.format(p[2]) }} · {{ p[3] }} days</p><p><strong>Projected maturity value: ₦{{ '{:,}'.format(p[4]) }}</strong></p></div>{% endfor %}</div>
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">NOVA EARN</p>
+  <h1>Build your financial journey with a cleaner, smarter experience.</h1>
+  <p>Manage your wallet, track investments, and keep your account activity in one place.</p>
+  <div class="actions">
+    {% if logged %}
+      <a class="btn" href="{{ url_for('dashboard') }}">Open dashboard</a>
+      <a class="btn secondary" href="{{ url_for('investments') }}">View investments</a>
+    {% else %}
+      <a class="btn" href="{{ url_for('register') }}">Create account</a>
+      <a class="btn secondary" href="{{ url_for('login') }}">Sign in</a>
+    {% endif %}
+  </div>
+</section>
+
+<h2>Investment plans</h2>
+<div class="grid">
+  {% for p in plans %}
+  <article class="card plan">
+    <span class="tag">{{ p[1] }}</span>
+    <h3>₦{{ '{:,}'.format(p[2]) }}</h3>
+    <p class="amount">{{ p[3] }} days</p>
+    <div class="return"><strong>Projected maturity value</strong><br>₦{{ '{:,}'.format(p[4]) }}</div>
+  </article>
+  {% endfor %}
+</div>
 {% endblock %}
