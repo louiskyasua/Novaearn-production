@@ -3,30 +3,74 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NovaEarn{% if title %} · {{ title }}{% endif %}</title>
+  <meta name="theme-color" content="#08111f">
+  <meta name="description" content="Nova Earn — wallet and investment platform.">
+  <title>Nova Earn{% if title %} · {{ title }}{% endif %}</title>
   <style>
-    body{font-family:Arial,sans-serif;max-width:1100px;margin:0 auto;padding:20px;background:#f5f7fb;color:#182033}
-    nav{display:flex;gap:14px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid #ddd;margin-bottom:24px}
-    a{color:#2457c5;text-decoration:none}.card{background:white;border:1px solid #e1e5ee;border-radius:12px;padding:20px;margin:16px 0}
-    input,select,button{display:block;width:100%;max-width:520px;padding:11px;margin:8px 0 16px;box-sizing:border-box}
-    button,.btn{background:#2457c5;color:white;border:0;border-radius:8px;padding:11px 16px;display:inline-block;cursor:pointer}
-    table{width:100%;border-collapse:collapse;background:white}.table{overflow:auto}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
-    .muted{color:#667085}.flash{padding:10px;background:#fff3cd;border-radius:8px;margin:8px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    :root{--bg:#07111f;--panel:#0d1a2d;--panel2:#10233c;--text:#f5f8ff;--muted:#9eb0c8;--line:rgba(255,255,255,.10);--brand:#4f8cff;--brand2:#72b8ff;--success:#45d39c;--shadow:0 24px 70px rgba(0,0,0,.28);}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at 10% 0%,rgba(79,140,255,.18),transparent 32%),radial-gradient(circle at 90% 10%,rgba(114,184,255,.10),transparent 28%),var(--bg);color:var(--text);line-height:1.55}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 75%)}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1180px,calc(100% - 32px));margin:0 auto;position:relative}
+    nav{min-height:78px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:14px 0;margin-bottom:34px}
+    .brand{display:flex;align-items:center;gap:11px;margin-right:auto;font-weight:800;font-size:1.08rem;letter-spacing:-.02em}
+    .brand-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),#2454d8);box-shadow:0 10px 30px rgba(79,140,255,.28);font-weight:900}
+    .nav-links{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+    .nav-links a{padding:9px 12px;border-radius:10px;color:var(--muted);font-size:.94rem}
+    .nav-links a:hover{background:rgba(255,255,255,.06);color:var(--text)}
+    main{padding-bottom:70px}
+    .card{background:linear-gradient(180deg,rgba(16,35,60,.94),rgba(10,24,42,.94));border:1px solid var(--line);border-radius:20px;padding:24px;margin:16px 0;box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+    .hero{padding:52px;overflow:hidden;position:relative;border-radius:28px;background:linear-gradient(135deg,rgba(18,48,88,.98),rgba(9,24,43,.96));}
+    .hero:after{content:"";position:absolute;width:300px;height:300px;right:-100px;top:-130px;border-radius:50%;background:rgba(79,140,255,.20);filter:blur(4px)}
+    .eyebrow{font-size:.76rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--brand2);margin:0 0 12px}
+    h1,h2,h3{line-height:1.15;letter-spacing:-.035em;margin-top:0}
+    h1{font-size:clamp(2.4rem,6vw,4.8rem);max-width:760px;margin-bottom:18px}
+    h2{font-size:clamp(1.65rem,3vw,2.25rem);margin:48px 0 18px}
+    h3{font-size:1.2rem}
+    p{color:var(--muted)}
+    .hero p{font-size:1.08rem;max-width:650px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+    .btn,button{border:0;border-radius:12px;background:linear-gradient(135deg,var(--brand),#2f5fe0);color:white;font-weight:750;padding:12px 18px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 12px 28px rgba(47,95,224,.25);transition:transform .15s ease,filter .15s ease}
+    .btn:hover,button:hover{transform:translateY(-1px);filter:brightness(1.08)}
+    .btn.secondary{background:rgba(255,255,255,.07);border:1px solid var(--line);box-shadow:none}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .plan{position:relative;overflow:hidden;min-height:190px;transition:transform .18s ease,border-color .18s ease}
+    .plan:hover{transform:translateY(-4px);border-color:rgba(79,140,255,.45)}
+    .plan .tag{display:inline-block;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--brand2);font-weight:800;margin-bottom:18px}
+    .plan .amount{font-size:1.45rem;font-weight:850;color:var(--text)}
+    .plan .return{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);color:#dbe7f8}
+    .muted{color:var(--muted)}
+    .flash{padding:13px 16px;border:1px solid rgba(255,193,7,.25);background:rgba(255,193,7,.10);border-radius:12px;margin:10px 0;color:#ffe6a0}
+    form{max-width:620px}
+    label{display:block;font-weight:700;margin:14px 0 7px;color:#dce7f6}
+    input,select,textarea{display:block;width:100%;padding:13px 14px;margin:0 0 16px;border-radius:12px;border:1px solid var(--line);background:#081525;color:var(--text);outline:none;font:inherit}
+    input:focus,select:focus,textarea:focus{border-color:rgba(79,140,255,.8);box-shadow:0 0 0 3px rgba(79,140,255,.12)}
+    table{width:100%;border-collapse:collapse;background:rgba(10,24,42,.85);border:1px solid var(--line);border-radius:16px;overflow:hidden}th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left}th{color:#cbd8ea;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}td{color:#dce7f6}.table{overflow:auto}
+    .stat{padding:20px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+    footer{border-top:1px solid var(--line);padding:24px 0 36px;color:var(--muted);font-size:.9rem}
+    @media(max-width:720px){.shell{width:min(100% - 20px,1180px)}nav{align-items:flex-start;flex-direction:column}.brand{margin-right:0}.nav-links{width:100%;overflow:auto;flex-wrap:nowrap}.nav-links a{white-space:nowrap}.hero{padding:30px 22px}h1{font-size:2.5rem}.card{padding:20px}.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
+<div class="shell">
 <nav>
-  <strong><a href="{{ url_for('home') }}">NovaEarn</a></strong>
-  {% if logged %}
-    <a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('wallet') }}">Wallet</a>
-    <a href="{{ url_for('investments') }}">Investments</a><a href="{{ url_for('transactions') }}">Transactions</a>
-    <a href="{{ url_for('referral') }}">Referral</a><a href="{{ url_for('profile') }}">Profile</a><a href="{{ url_for('logout') }}">Logout</a>
-  {% else %}
-    <a href="{{ url_for('login') }}">Login</a><a href="{{ url_for('register') }}">Register</a>
-  {% endif %}
-  <a href="{{ url_for('about') }}">About</a><a href="{{ url_for('support') }}">Support</a>
+  <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">N</span><span>Nova Earn</span></a>
+  <div class="nav-links">
+    {% if logged %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('wallet') }}">Wallet</a>
+      <a href="{{ url_for('investments') }}">Investments</a><a href="{{ url_for('transactions') }}">Transactions</a>
+      <a href="{{ url_for('referral') }}">Referral</a><a href="{{ url_for('profile') }}">Profile</a><a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a><a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+    <a href="{{ url_for('about') }}">About</a><a href="{{ url_for('support') }}">Support</a>
+  </div>
 </nav>
 {% with messages=get_flashed_messages() %}{% for message in messages %}<div class="flash">{{ message }}</div>{% endfor %}{% endwith %}
-{% block content %}{% if error_message %}<div class="card"><h1>Request error</h1><p>{{ error_message }}</p></div>{% endif %}{% endblock %}
+<main>{% block content %}{% if error_message %}<div class="card"><h1>Request error</h1><p>{{ error_message }}</p></div>{% endif %}{% endblock %}</main>
+<footer>Nova Earn · Wallet and investment platform</footer>
+</div>
 </body>
 </html>
