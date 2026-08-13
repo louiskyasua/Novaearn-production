@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NovaEarn{% if title %} · {{ title }}{% endif %}</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:1100px;margin:0 auto;padding:20px;background:#f5f7fb;color:#182033}
+    nav{display:flex;gap:14px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid #ddd;margin-bottom:24px}
+    a{color:#2457c5;text-decoration:none}.card{background:white;border:1px solid #e1e5ee;border-radius:12px;padding:20px;margin:16px 0}
+    input,select,button{display:block;width:100%;max-width:520px;padding:11px;margin:8px 0 16px;box-sizing:border-box}
+    button,.btn{background:#2457c5;color:white;border:0;border-radius:8px;padding:11px 16px;display:inline-block;cursor:pointer}
+    table{width:100%;border-collapse:collapse;background:white}.table{overflow:auto}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+    .muted{color:#667085}.flash{padding:10px;background:#fff3cd;border-radius:8px;margin:8px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  </style>
+</head>
+<body>
+<nav>
+  <strong><a href="{{ url_for('home') }}">NovaEarn</a></strong>
+  {% if logged %}
+    <a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('wallet') }}">Wallet</a>
+    <a href="{{ url_for('investments') }}">Investments</a><a href="{{ url_for('transactions') }}">Transactions</a>
+    <a href="{{ url_for('referral') }}">Referral</a><a href="{{ url_for('profile') }}">Profile</a><a href="{{ url_for('logout') }}">Logout</a>
+  {% else %}
+    <a href="{{ url_for('login') }}">Login</a><a href="{{ url_for('register') }}">Register</a>
+  {% endif %}
+  <a href="{{ url_for('about') }}">About</a><a href="{{ url_for('support') }}">Support</a>
+</nav>
+{% with messages=get_flashed_messages() %}{% for message in messages %}<div class="flash">{{ message }}</div>{% endfor %}{% endwith %}
+{% block content %}{% if error_message %}<div class="card"><h1>Request error</h1><p>{{ error_message }}</p></div>{% endif %}{% endblock %}
+</body>
+</html>

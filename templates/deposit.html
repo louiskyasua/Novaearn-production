@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pagehead">
+  <div>
+    <p class="eyebrow">WALLET</p>
+    <h1>Deposit</h1>
+    <p class="muted">Transfer the amount first, then submit your payment reference for verification.</p>
+  </div>
+  <a class="btn" href="/dashboard">Dashboard</a>
+</div>
+
+<section>
+  <div class="card">
+    <h2>1. Make your transfer</h2>
+    <p class="muted">Choose one of the supported payment accounts below and transfer the exact amount you intend to deposit.</p>
+
+    {% for account in accounts %}
+    <div class="row">
+      <span>
+        <strong>{{ account.provider }}</strong>
+        <small>{{ account.account_number }}</small>
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>2. Submit the transfer</h2>
+    <p class="form-note">Submitting this form does <strong>not</strong> credit your balance. Your deposit stays pending until an administrator verifies the payment.</p>
+
+    <form method="post" action="/deposit">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+      <label for="amount">Amount</label>
+      <input id="amount" name="amount" type="number" min="5000" max="30000" step="1" required>
+
+      <label for="provider">Payment provider</label>
+      <select id="provider" name="provider" required>
+        <option value="">Select provider</option>
+        {% for account in accounts %}
+        <option value="{{ account.provider }}">{{ account.provider }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="reference">Payment reference</label>
+      <input id="reference" name="reference" type="text" maxlength="150" required placeholder="Enter the transfer reference">
+
+      <button class="btn" type="submit">I've transferred the money</button>
+    </form>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <p class="muted"><strong>Important:</strong> Your balance will only change after the payment is independently verified and the deposit is approved by an administrator.</p>
+  </div>
+</section>
+{% endblock %}

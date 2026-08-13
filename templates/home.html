@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h1>NovaEarn</h1><p class="muted">Investment and wallet platform.</p>{% if logged %}<a class="btn" href="{{ url_for('dashboard') }}">Open dashboard</a>{% else %}<a class="btn" href="{{ url_for('register') }}">Create account</a>{% endif %}</div>
+<h2>Investment plans</h2><div class="grid">{% for p in plans %}<div class="card"><h3>{{ p[1] }}</h3><p>₦{{ '{:,}'.format(p[2]) }} · {{ p[3] }} days</p><p><strong>Projected maturity value: ₦{{ '{:,}'.format(p[4]) }}</strong></p></div>{% endfor %}</div>
+{% endblock %}

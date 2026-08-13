@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pagehead">
+  <div>
+    <p class="eyebrow">WALLET</p>
+    <h1>Withdraw</h1>
+    <p class="muted">Request a withdrawal from your available balance.</p>
+  </div>
+  <a class="btn" href="/dashboard">Dashboard</a>
+</div>
+
+<div class="card">
+  <p><strong>Available balance:</strong> ₦{{ "{:,}".format(user.balance) }}</p>
+  <p class="muted">Withdrawal requests are reviewed before funds are sent. Submitting this form does not automatically transfer money to your bank account.</p>
+
+  <form method="post" action="/withdraw">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+    <label for="amount">Amount</label>
+    <input id="amount" name="amount" type="number" min="5000" step="1" max="{{ user.balance }}" required>
+
+    <label for="destination">Bank</label>
+    <select id="destination" name="destination" required>
+      <option value="">Select bank</option>
+      {% for bank in banks %}
+      <option value="{{ bank.name }}">{{ bank.name }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="bank_code">Bank code</label>
+    <input id="bank_code" name="bank_code" type="text" inputmode="numeric" maxlength="6" required>
+
+    <label for="destination_number">Account number</label>
+    <input id="destination_number" name="destination_number" type="text" inputmode="numeric" maxlength="20" required>
+
+    <label for="account_name">Account name</label>
+    <input id="account_name" name="account_name" type="text" maxlength="100" required>
+
+    <button class="btn" type="submit">Request withdrawal</button>
+  </form>
+</div>
+
+<div class="card">
+  <p class="muted"><strong>Security:</strong> Your balance is not increased by a withdrawal request. A pending request must be reviewed through the admin system before payment is made.</p>
+</div>
+{% endblock %}
