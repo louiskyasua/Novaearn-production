@@ -2,12 +2,12 @@
 {% block content %}
 <section class="hero">
   <p class="eyebrow">NOVA EARN</p>
-  <h1>Build your financial journey with a cleaner, smarter experience.</h1>
-  <p>Manage your wallet, track investments, and keep your account activity in one place.</p>
+  <h1>Earn on the platform by completing simple tasks.</h1>
+  <p>Complete eligible social and promotional tasks, submit proof when required, and earn rewards after review.</p>
   <div class="actions">
     {% if logged %}
       <a class="btn" href="{{ url_for('dashboard') }}">Open dashboard</a>
-      <a class="btn secondary" href="{{ url_for('investments') }}">View investments</a>
+      <a class="btn secondary" href="{{ url_for('referral') }}">Refer &amp; earn ₦500</a>
     {% else %}
       <a class="btn" href="{{ url_for('register') }}">Create account</a>
       <a class="btn secondary" href="{{ url_for('login') }}">Sign in</a>
@@ -15,15 +15,31 @@
   </div>
 </section>
 
-<h2>Investment plans</h2>
-<div class="grid">
-  {% for p in plans %}
-  <article class="card plan">
-    <span class="tag">{{ p[1] }}</span>
-    <h3>₦{{ '{:,}'.format(p[2]) }}</h3>
-    <p class="amount">{{ p[3] }} days</p>
-    <div class="return"><strong>Projected maturity value</strong><br>₦{{ '{:,}'.format(p[4]) }}</div>
+<section class="grid">
+  <article class="card">
+    <span class="tag">WELCOME</span>
+    <h2>₦150 welcome reward</h2>
+    <p>Your ₦150 welcome reward is shown clearly in your account as pending until the stated account-activation requirements are completed.</p>
   </article>
-  {% endfor %}
-</div>
+  <article class="card">
+    <span class="tag">TASKS</span>
+    <h2>Earn per task</h2>
+    <p>Available tasks can include Facebook, YouTube, TikTok and Telegram promotions. Each task displays its reward before you start.</p>
+  </article>
+  <article class="card">
+    <span class="tag">BONUSES</span>
+    <h2>₦50–₦100 bonus tasks</h2>
+    <p>Occasional promotional tasks may carry higher rewards. The exact reward and requirements are displayed on the task.</p>
+  </article>
+</section>
+
+<section class="card">
+  <h2>How Nova Earn works</h2>
+  <div class="grid">
+    <div><strong>1. Register</strong><p>Create your account and see your welcome reward status.</p></div>
+    <div><strong>2. Activate</strong><p>If activation is required, the fee and conditions are shown before payment.</p></div>
+    <div><strong>3. Complete tasks</strong><p>Follow the task instructions and submit proof where required.</p></div>
+    <div><strong>4. Get rewarded</strong><p>Approved task rewards are credited to your available balance.</p></div>
+  </div>
+</section>
 {% endblock %}
