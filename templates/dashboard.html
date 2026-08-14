@@ -1,1 +1,60 @@
-{% extends "base.html" %}{% block content %}<h1>Dashboard</h1><div class="grid"><div class="card"><h3>Balance</h3><p>₦{{ '{:,}'.format(user.balance) }}</p></div><div class="card"><h3>Account</h3><p>{{ user.name }}<br>{{ user.email }}</p></div></div><div class="card"><a class="btn" href="{{ url_for('deposit') }}">Deposit</a> <a class="btn" href="{{ url_for('withdraw') }}">Withdraw</a> <a class="btn" href="{{ url_for('investments') }}">Invest</a></div><h2>Recent transactions</h2><div class="table"><table><tr><th>Type</th><th>Amount</th><th>Note</th><th>Date</th></tr>{% for t in transactions %}<tr><td>{{ t.kind }}</td><td>₦{{ '{:,}'.format(t.amount) }}</td><td>{{ t.note }}</td><td>{{ t.created_at }}</td></tr>{% else %}<tr><td colspan="4">No transactions yet.</td></tr>{% endfor %}</table></div>{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">NOVA EARN</p>
+  <h1>Welcome back, {{ user.name }}</h1>
+  <p>Complete tasks, submit proof where required, and track your approved rewards.</p>
+</section>
+
+<div class="grid">
+  <div class="card">
+    <span class="tag">AVAILABLE BALANCE</span>
+    <h2>₦{{ '{:,}'.format(user.balance) }}</h2>
+    {% if user.balance >= 1500 %}
+      <a class="btn" href="{{ url_for('withdraw') }}">Withdraw</a>
+    {% endif %}
+  </div>
+  <div class="card">
+    <span class="tag">ACCOUNT</span>
+    <p>{{ user.email }}</p>
+    <a class="btn secondary" href="{{ url_for('profile') }}">Profile</a>
+  </div>
+</div>
+
+<section class="card">
+  <span class="tag">WELCOME REWARD</span>
+  <h2>₦150</h2>
+  <p>The ₦150 welcome reward is subject to the activation conditions displayed by Nova Earn. It is not presented as available cash until those conditions are satisfied.</p>
+  <a class="btn" href="{{ url_for('deposit') }}">View activation/payment options</a>
+</section>
+
+<section class="card">
+  <div class="actions">
+    <h2 style="margin-right:auto">Earn on Nova Earn</h2>
+    <a class="btn secondary" href="{{ url_for('referral') }}">Refer &amp; earn ₦500</a>
+  </div>
+  <p>Task rewards should be credited only after the required task and proof have been reviewed and approved.</p>
+  <div class="grid">
+    <article class="card">
+      <span class="tag">SOCIAL TASKS</span>
+      <h3>Facebook · YouTube · TikTok · Telegram</h3>
+      <p>Follow the exact instructions shown for each available promotional task.</p>
+    </article>
+    <article class="card">
+      <span class="tag">TASK REWARDS</span>
+      <h3>Up to ₦100 per task</h3>
+      <p>Normal tasks can pay ₦20, while selected promotional tasks can offer ₦50 or ₦100.</p>
+    </article>
+  </div>
+</section>
+
+<h2>Recent transactions</h2>
+<div class="table"><table>
+<tr><th>Type</th><th>Amount</th><th>Note</th><th>Date</th></tr>
+{% for t in transactions %}
+<tr><td>{{ t.kind }}</td><td>₦{{ '{:,}'.format(t.amount) }}</td><td>{{ t.note }}</td><td>{{ t.created_at }}</td></tr>
+{% else %}
+<tr><td colspan="4">No transactions yet.</td></tr>
+{% endfor %}
+</table></div>
+{% endblock %}
